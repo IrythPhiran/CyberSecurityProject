@@ -127,7 +127,7 @@ ClamAV
 2.1. Instalar o ClamAV
 - Navegar até ao website "https://www.clamav.net/downloads"
 - Selecionar a opção "Windows" e fazer download à versão mais recente de 64 bits (clamav-0.105.1.win.x64.zip na criação deste guia)
-- Extraír os ficheiros dentro do ficheiro clamav-0.105.1.win.x64.zip para a pasta "C:\Program Files (x86)"
+- Extraír os ficheiros dentro do ficheiro clamav-0.105.1.win.x64.zip para a pasta "C:\Program Files (x86)\clamav-0.105.1.win.x64"
 
 2.2. Configurar o ClamAV
 - Navegar até ao website "https://github.com/IrythPhiran/CyberSecurityProject" 
