@@ -127,11 +127,11 @@ ClamAV
 2.1. Instalar o ClamAV
 - Navegar até ao website "https://www.clamav.net/downloads"
 - Selecionar a opção "Windows" e fazer download à versão mais recente de 64 bits (clamav-0.105.1.win.x64.zip na criação deste guia)
-- Extraír os ficheiros dentro do ficheiro clamav-0.105.1.win.x64.zip para a pasta "C:\Program Files (x86)\clamav-0.105.1.win.x64"
+- Extraír os ficheiros dentro do ficheiro clamav-0.105.1.win.x64.zip para a pasta "C:\Program Files (x86)\"
 
 2.2. Configurar o ClamAV
 - Navegar até ao website "https://github.com/IrythPhiran/CyberSecurityProject" 
-- Transferir os ficheiros "clamd.conf" e "freschlam.conf". Colocar os ficheiros na pasta "C:\Program Files (x86)" substituindo os já existentes na pasta (caso existam)
+- Transferir os ficheiros "clamd.conf" e "freschlam.conf". Colocar os ficheiros na pasta "C:\Program Files (x86)\clamav-0.105.1.win.x64" substituindo os já existentes na pasta (caso existam)
 - Abrir uma janela de PowerShell com privilégios de administrador e introduzir os seguintes comandos;
 >& "C:\Program Files (x86)\clamav-0.105.1.win.x64\clamd.exe" --install
 
