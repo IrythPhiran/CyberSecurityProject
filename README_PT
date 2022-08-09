@@ -1,5 +1,4 @@
-#!/bin/bash
-##################################Linux##################################
+					##################################Linux##################################
 Disclaimer: A distro(distribuição) usada para o teste deste setup foi o Ubuntu porque é baseada na distro mais usada de Linux(Debian) em ambientes de Desktop pessoais. Foi feita uma instalação default do Ubuntu.
 Após a instalação foi corrido o comando "apt update && apt upgrade -y" para atualizar o sistema. O setup inteiro do Privoxy foi feito por SSH(Secure Shell) num ambiente não gráfico, mas os testes à ligação com um browser foram feitos no Desktop Environment detault do Ubuntu.
 Os comandos "systemctl", "ufw" e "apt" são relacionados com o sistema de init, firewall e package manager do Ubuntu.
@@ -7,7 +6,9 @@ Por fim, devido a diferenças de software e serviços de distro para distro é p
 
 Privoxy
 1.1. Instalar o privoxy
+```
 # apt install -y privoxy
+```
 
 1.2. Criar uma cópia de segurança do ficheiro de configuração do Privoxy
 # cp /etc/privoxy/config /etc/privoxy/config_bk
