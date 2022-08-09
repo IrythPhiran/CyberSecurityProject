@@ -6,9 +6,7 @@ Por fim, devido a diferenças de software e serviços de distro para distro é p
 
 Privoxy
 1.1. Instalar o privoxy
-```
 # apt install -y privoxy
-```
 
 1.2. Criar uma cópia de segurança do ficheiro de configuração do Privoxy
 # cp /etc/privoxy/config /etc/privoxy/config_bk
@@ -82,7 +80,7 @@ rkhunter --check --skip-keypress >>  "$d-weeklyscan.log"
 2.6. Adicionar o seguinte ao ficheiro /etc/crontab para fazer schedule a 1 scan semanal (Sexta-Feira)
 # echo "0  12 *  * fri root /root/weeklyscan.sh" > /etc/crontab
 
-#################################Windows 10###############################
+					#################################Windows 10###############################
 Disclaimer: A versão do windows usada para este teste foi o Windows 10 HOME (10.0.19044 build 19044, não activado) por ainda ser o windows mais popular em uso. Foi feita uma instalação default sem uma network interface, com todas as privacy settings em "no". 
 Após a instalação o sistema foi atualizado para a versão mais actual. O setup inteiro do Privoxy foi feito diretamente na máquina de teste num ambiente gráfico. 
 O browser usado não foi o Chromium, foi o "Comodo Dragon" que é chromium based, mas focado em cibersegurança. Durante o setup inicial a DNS segura do Comodo foi rejeitada. 
@@ -164,8 +162,9 @@ ClamAV
 - Selecionar "Start a Program"
 - Em Program/script selecionar Browse e navegar até ao diretório "C:\Program Files (x86)\clamav-0.105.1.win.x64" e selecionar o clamscan.exe
 - Adicionar os seguintes argumentos; --recursive C:\ 
-#################################Platform Agnostic########################
-					Extensões
+
+					#################################Platform Agnostic########################
+#####Extensões#####
 	Privacy Badger
 -O PrivacyBadger é uma extensão que bloqueia automáticamente trackers e previne que empresas sigam a nossa pegada digital através de múltiplos websites.
 
@@ -178,7 +177,7 @@ ClamAV
 	Clear URLs
 -O Clear URLs remove automáticamente trackers de URLs e permite uma navegação mais privada. 
 
-					Websites
+#####Websites#####
 	VirusTotal
 -O VirusTotal é um website grátis que permite fazer um scan de ficheiros ou URLs para detectar se contêm malware. Há que ter em conta que este website irá partilhar o código com empresas de Anti-Virus, portanto é um pequeno aviso para quem queira testar neste website se o seu malware-custom consegue eludir os programas de AV ou não...
 
