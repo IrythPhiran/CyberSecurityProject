@@ -1,1 +1,193 @@
-WIP
+          ##################################Linux##################################
+Disclaimer: The Distro(Linux Distribution) used for the setup of this test was Ubuntu because it is based off of the most used Linux Distro(Debian) in personal desktop environments. Ubuntu was installed with the default base install. After the installation the command "apt update && apt upgrade -y" was ran to fully update the system to the latest available version. The entire setup for Privoxy was done through SSH(Secure SHell) in a non graphic environment, but the tests performed to the connection with a browser were done on the default Desktop Environment for Ubuntu.
+The commands "systemctl", "ufw" and "apt" are related to the init system, firewall and package manager from Ubuntu, if you are using a system with a different suite of these types of software you will need to adjust the commands.
+Lastly, due to the differences in software and services from distro to distro it is possible that Privoxy may be temperamental and is not working at 100%, ymmv (Your mileage may vary). 
+
+Privoxy
+1.1. Install Privoxy
+# apt install -y privoxy
+
+1.2. Create a backup security copy of the configuration file for Privoxy
+# cp /etc/privoxy/config /etc/privoxy/config_bk
+
+1.3. The default configuration file for Privoxy should be sufficient, however it is filled with descriptive text that although instructive may provide some difficulty for future tweaks, as such it is advised that you use the shortened file provided in my GitHub (optional)
+
+1.4. Activate the Privoxy service
+# systemctl enable privoxy --now
+# systemctl status privoxy
+
+1.5. Allow access to port 8118 (default) in which Privoxy will be listening on
+- Using ufw
+	# ufw allow 8118
+- Using firewalld
+	# firewall-cmd --add-port=8118/tcp --permanent
+	# firewall-cmd --reload
+
+1.6. Test if Privoxy is properly listening on 8118
+# netstat -tulpn
+or
+# telnet 127.0.0.1 8118
+
+1.7. Add privoxy to your browser
+- Firefox
+	In the URL bar, type in "about:preferences" and search for proxy
+	Open the network settings and select the option "Manual proxy configuration"
+	Edit the field "http" with the following; 127.0.0.1
+	Edit the field "port" with the following; 8118
+	Select the option "Also use this proxy for HTTPS"
+	Save the changes
+- Chromium
+	Open the settings for keyboard-shortcuts on your system
+	Create a new shortcut with the following details; 
+		Name: Chromium
+		Command: chromium --proxy-server="127.0.0.1:8118"
+		Shortcut: Any preferred shortcut [ex: ctrl + c]
+	Save the new keybinding
+Warning: Should privoxy stop working or is turned off, the browsers will lose internet connection (they will stop being able to communicate with port 8118), as such you will need to revert the proxy settings on your browsers/system or attempt to restart Privoxy.
+
+Automate scans in Linux
+2.1. Install ClamAV, chkrootkit and rkhunter
+# apt install -y clamav chkrootkit rkhunter
+("no network" chosen for rkhunter) 
+
+2.2. Confirm that the ClamAV service is inabled and started
+# systemctl status clamav-freshclam.service 
+In case it is not, enable and start it
+# systemctl enable clamav-freshclam.service --now
+
+2.3. Schedule an automated weekly scan with logging
+Start a session as root
+# sudo su -
+or
+# sudo -i
+
+2.4. Create a text file in the /root directory or download from my GitHub the script "weeklyscan.sh"
+#!/bin/sh
+d=$(date -u +%Y-%m-%d)
+clamscan -r / > "/root/$d-weeklyscan.log"
+echo "" >> "/root/$d-weeklyscan.log"
+chkrootkit >> "/root/$d-weeklyscan.log" 
+echo "" >> "$d-weeklyscan.log"
+rkhunter --check --skip-keypress >>  "$d-weeklyscan.log"
+
+2.5. Give the script execute permissions 
+# chmod 700 /root/weeklyscan.sh
+
+2.6. Add an entry to the /etc/crontab file to schedule a weekly scan (Friday)
+# echo "0  12 *  * fri root /root/weeklyscan.sh" > /etc/crontab
+
+          #################################Windows 10###############################
+Disclaimer: The version of Windows that was used for this tist was Windows 10 HOME (10.0.19044 build 19044, not activated) because it is still the most commonly available Windows in use. The system was install with a default installation with the network interface turned off as well as all privacy settings set to "no". 
+After the installation the system was updated to the most current version. The entire Privoxy setup was done directly on the test machine on the default graphical environment.
+The browser that was used was not Chromium, it was "Comodo Dragon" which is chromium based, however more focused on cybersecurity. During the initial setup, the secure DNS for Comodo was rejected.
+
+Privoxy
+1.1. Install Privoxy
+-Navigate to the website "https://www.privoxy.org/sf-download-mirror/Win32/" and download the .exe file for the most recent version (3.0.33 Stable - 08/12/2021 as of creating this guide)
+- After downloading, execute privoxy_setup_3.0.33.exe
+>Add to start menu [x]
+>Run automatically on Startup [x]
+
+1.2. Correct any startup erros
+Privoxy may cause a startup error due to a faulty log file, to correct this you will need to;
+- Open notepad, select "file>save as" and create a new .txt file named "privoxy.log"
+- Afterwards, open the file explorer and navigate to the folder "C:\Program Files (x86)\Privoxy" and copy the new "privoxy.log" file replacing the existing one 
+
+1.3. Create a security copy of the configuration file for Privoxy
+- Still on the folder "C:\Program Files(x86)\Privoxy", copy/paste the "config" file
+
+1.4. The default configuration file for Privoxy should be sufficient, however it is filled with descriptive text that although instructive may provide some difficulty for future tweaks, as such it is advised that you use the shortened file provided in my GitHub (optional)
+
+1.5. Start Privoxy through the .exe file present in the folder "C:\Program Files (x86)\Privoxy" or through the start menu
+
+1.6. Ensure that Privoxy is running by looking at the system tray and confirming that there is an icon there which looks like a P inside of a blue circle
+
+1.7. Add privoxy to the browser
+
+Adicionar o privoxy ao browser
+- Firefox
+	In the URL bar, type in "about:preferences" and search for proxy
+	Open the network settings and select the option "Manual proxy configuration"
+	Edit the field "http" with the following; 127.0.0.1
+	Edit the field "port" with the following; 8118
+	Select the option "Also use this proxy for HTTPS"
+	Save the changes Firefox
+- Chromium
+	In the URL bar, type in "chrome://settings" and search for proxy
+	Select "Open your computer's proxy settings"
+	Activate the option "Use a proxy server"
+	Add to the field "Address" the following; 127.0.0.1
+	Add to the field "Port" the following; 8118
+	Select "Save"
+Warning: Should privoxy stop working or is turned off, the browsers will lose internet connection (they will stop being able to communicate with port 8118), as such you will need to revert the proxy settings on your browsers/system or attempt to restart Privoxy.
+
+ClamAV
+2.1. Install ClamAV
+- Navigate to the website "https://www.clamav.net/downloads"
+- Select the option "Windows" and download the latest 64 bit available version (clamav-0.105.1.win.x64.zip as of making this guide)
+- Extract the files inside clamav-0.105.1.win.x64.zip into the folder "C:\Program Files (x86)"
+
+2.2. Configure ClamAV
+- Navigate to the website "https://github.com/IrythPhiran/CyberSecurityProject"
+- Transfer the files "clamd.conf" and "freshclam.conf". Place the files in the folder "C:\Program Files (x86)\clamav-0.105.1.win.x64" replacing existing files (in case there are any) 
+- Open a PowerShell window with administrator priviledges and run the following command;
+>& "C:\Program Files (x86)\clamav-0.105.1.win.x64\clamd.exe" --install
+
+2.3. Uptade ClamAV
+- Open a PowerShell window with administrator priviledges and run the following command;
+>& "C:\Program Files (x86)\clamav-0.105.1.win.x64\freshclam.exe"
+
+2.4. Run a sporadic full system scan with ClamAV with logging
+- To execute a full system scan with logging, first open a PowerShell window with administrator priviledges and run the following command;
+>& "C:\Program Files (x86)\clamav-0.105.1.win.x64\clamscan.exe" --recursive C:\ > "C:\Program Files (x86)\clamav-0.105.1.win.x64\clamscanlog.log"
+(The Scan will most likely last longer than two hours searching through all the files on the computer and will consume abour 1Gb of RAM for the duration of the scan) 
+
+2.5. Automate ClamAV updates
+- Open the Task Scheduler as Administrator and select "Action>Create Basic Task..."
+- Fill in the "Name" field with the following; ClamavUpdate
+- Fill in the "Description" field with the following; This action runs freshclam.exe on a weekly basis to keep the Anti-Virus up to date.
+- Select "Weekly"
+- Select the preferred day and hours (ex: "Friday" at 12:00)
+- Select "Start a Program"
+- In Program/Script select "Browse" and navigate to the folder "C:\Program Files (x86)\clamav-0.105.1.win.x64" then select "freshclam.exe"
+- Save the new Task
+
+2.6. Automate a weekly scan of ClamAV
+- Open the Task Scheduler as an Administrator and select "Action>Create Basic Task..."
+- Fill in the "Name" field with the following; ClamavScan
+- Fill in the "Description" field with the following; This task performs a weekly scan of the entire machine.
+- Select "Weekly"
+- Select the preferred day and hours, in this case after the update task, in case it is configured (ex: "Friday" at 12:30)
+- Select "Start a Program"
+- In Program/Script select "Browse" and navigate to the folder "C:\Program Files (x86)\clamav-0.105.1.win.x64" then select clamscan.exe
+- Add the following arguments; --recursive C:\
+
+          #################################Platform Agnostic########################
+					Extensions
+	Privacy Badger
+- Privacy Badger is a browser extension that automatically blocks trackers and mitigates corporations from following your digital footprint through multiple websites.
+
+	HTTPS Everywhere
+- The HTTPS Everywhere extension forces the connection to websites through the secure and encrypted protocol (https) instead of the non secure and unencrypted counterpart (http).
+
+	Adblockers (ex: uBlockOrigin)
+- Privoxy alone is not enough to block all of the Adverts on the internet, adblocking extensions are also advised. Adblockers help prevent certain pop ups and misclicks in dubious websites. Many of these extensions also possess additional blocking tools for more than adverts, some can even block javascript from running. 
+
+	Clear URLs
+- Clear URLs automatically removes trackers from URLs and allows for a more private browsing of the internet. 
+
+					Websites
+	VirusTotal
+- VirusTotal is a free website that allows you to scan for files or URLs to detect if they contain traces of malware. Beware that this website will share code with Anti-Virus vendors, so it is just a small warning for those that might be interested in testing if their custom made malware is able to evade AV software or not...
+
+	Shodan
+- Shodan is often considered the most dangerous search engine on the internet, but it can also be an ally. This website is a search engine for all internet connected devices, this allows for us to search our own devices and figure out what information they are displaying to the rest of the world, which then allows us to search for how to hide it.
+
+	HaveIBeenPwned
+- HaveIbeenPwned is a website that allows users to confirm if their email has been a victim of data breaches in the past.
+
+	Dehashed
+- Dehashed is a website that contains a database of user credentials such as username, emails and passwords. This website is more of a hacking tool, however it can serve as a tool for researching our own accounts to confirm if they are safe or if the hash is already in the hands of people with way too much free time and GPU power...
+
+	Swisscows
+- Swisscows is a search engine that blocks pornographic results by default (some eventually get through, but they are rare) which also protects your privacy by not registering your search history and selling it to third parties.
