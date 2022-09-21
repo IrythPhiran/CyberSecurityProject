@@ -50,7 +50,7 @@ Automate scans in Linux
 # apt install -y clamav chkrootkit rkhunter
 ("no network" chosen for rkhunter) 
 
-2.2. Confirm that the ClamAV service is inabled and started
+2.2. Confirm that the ClamAV service is enabled and started
 # systemctl status clamav-freshclam.service 
 In case it is not, enable and start it
 # systemctl enable clamav-freshclam.service --now
@@ -74,7 +74,7 @@ rkhunter --check --skip-keypress >>  "$d-weeklyscan.log"
 # chmod 700 /root/weeklyscan.sh
 
 2.6. Add an entry to the /etc/crontab file to schedule a weekly scan (Friday)
-# echo "0  12 *  * fri root /root/weeklyscan.sh" > /etc/crontab
+# echo "0  12 *  * fri root /root/weeklyscan.sh" >> /etc/crontab
 
           #################################Windows 10###############################
 Disclaimer: The version of Windows that was used for this tist was Windows 10 HOME (10.0.19044 build 19044, not activated) because it is still the most commonly available Windows in use. The system was install with a default installation with the network interface turned off as well as all privacy settings set to "no". 
