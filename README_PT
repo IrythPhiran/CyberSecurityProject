@@ -78,7 +78,7 @@ rkhunter --check --skip-keypress >>  "$d-weeklyscan.log"
 # chmod 700 /root/weeklyscan.sh
 
 2.6. Adicionar o seguinte ao ficheiro /etc/crontab para fazer schedule a 1 scan semanal (Sexta-Feira)
-# echo "0  12 *  * fri root /root/weeklyscan.sh" > /etc/crontab
+# echo "0  12 *  * fri root /root/weeklyscan.sh" >> /etc/crontab
 
 					#################################Windows 10###############################
 Disclaimer: A versão do windows usada para este teste foi o Windows 10 HOME (10.0.19044 build 19044, não activado) por ainda ser o windows mais popular em uso. Foi feita uma instalação default sem uma network interface, com todas as privacy settings em "no". 
